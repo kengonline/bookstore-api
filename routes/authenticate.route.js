@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const { wrapper } = require('../helpers/route.helper')
+const { wrapper } = require('../helpers/route.helper');
 
 router.post('/login', (req, res, next) => wrapper(req, res, next, () => {
     const { username } = req.body;
@@ -16,10 +16,6 @@ router.post('/login', (req, res, next) => wrapper(req, res, next, () => {
 }))
 
 router.post('/logout', (req, res, next) => wrapper(req, res, next, () => {
-    res.send("Logout success")
-}))
-
-router.post('/register', (req, res, next) => wrapper(req, res, next, () => {
     res.send("Logout success")
 }))
 
