@@ -1,21 +1,32 @@
+const UnauthorizedError = require('../errors/UnauthorizedError')
 const { getLogTime } = require('../helpers/datetime.helper')
 
-const wrapper = (req, res, next, callback) => {
+const exceptionWrapper = async (req, res, next, callback) => {
+    try {
+        await callback(req, res, next)
+    } catch (e) {
+        next(e)
+    }
+}
+
+const wrapper = async (req, res, next, callback) => {
     console.log(`[${getLogTime()}] Begin: [${req.method}] ${req.originalUrl}`);
-    callback(req, res, next)
+
+    await exceptionWrapper(req, res, next, callback)
+
     console.log(`[${getLogTime()}] End: [${req.method}] ${req.originalUrl}`);
 }
 
-const secureWrapper = (req, res, next, callback) => {
+const secureWrapper = async (req, res, next, callback) => {
     console.log(`[${getLogTime()}] Begin: [${req.method}] ${req.originalUrl}`);
 
     // TODO: Check req token with redis
     const isAuthenticated = false;
-    if (isAuthenticated) {
-        callback(req, res, next)
-    } else {
-        res.status(401).send('Unauthenticated');
+    if (!isAuthenticated) {
+        throw new UnauthorizedError();
     }
+
+    await exceptionWrapper(req, res, next, callback)
 
     console.log(`[${getLogTime()}] End: [${req.method}] ${req.originalUrl}`);
 }
