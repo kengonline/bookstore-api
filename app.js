@@ -1,7 +1,10 @@
 const express = require('express')
 const app = express()
-const port = 3000
+const port = 8080
+const bodyParser = require('body-parser');
 
-app.get('/', (req, res) => res.send({ message: 'Hello World!' }))
+// parse application/json
+app.use(bodyParser.json())
+app.use(require('./routes/index.route'))
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
