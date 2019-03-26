@@ -1,5 +1,5 @@
 const MySql = require('mysql2');
-const EnvConfig = require('./env')
+const EnvConfig = require('./env.config')
 
 const pool = MySql.createPool({
     host: EnvConfig.database.host,
