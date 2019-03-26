@@ -5,6 +5,7 @@ class BusinessError extends Error {
         super(message);
         this.name = BUSINESS_ERROR;
         this.args = args;
+        this.httpStatus = 400;
     }
 }
 
