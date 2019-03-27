@@ -1,5 +1,5 @@
 const moment = require('moment');
-const { getConnection, queryTransaction } = require('../helpers/database.helper')
+const { getConnection } = require('../helpers/database.helper')
 
 const findOneByEmail = async (email) => {
     const conn = await getConnection();
