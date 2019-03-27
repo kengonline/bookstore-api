@@ -1,6 +1,12 @@
 const moment = require('moment');
 const { getConnection } = require('../helpers/database.helper')
 
+const findOneById = async (id) => {
+    const conn = await getConnection();
+    const [rows] = await conn.execute("SELECT * FROM `User` WHERE id = ?", [id])
+    return rows.length ? rows[0] : undefined;
+}
+
 const findOneByEmail = async (email) => {
     const conn = await getConnection();
     const [rows] = await conn.execute("SELECT * FROM `User` WHERE email = ?", [email])
@@ -14,6 +20,7 @@ const insertUser = (conn, { email, password, firstName, lastName, status, salt }
 }
 
 module.exports = {
+    findOneById,
     findOneByEmail,
     insertUser
 }
