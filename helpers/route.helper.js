@@ -75,7 +75,7 @@ const secureWrapper = async (req, res, next, callback) => {
     } else if (isRenew && newTokenKey === undefined) {
         const key = await renewToken(oldTokenKey, createdDate, duration, oldTokenTTL);
 
-        console.log(`[${getLogTime()}] Token: ${token} => ${key}`);
+        console.log(`[${DateTimeHelper.getLogTime()}] Token: ${token} => ${key}`);
         res.cookie(COOKIE.TOKEN, key, { maxAge: duration });
         await exceptionWrapper(req, res, next, callback)
     } else if (isRenew) {
