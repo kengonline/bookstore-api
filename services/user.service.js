@@ -10,7 +10,7 @@ const ErrorCode = require('../assets/error_code.json')
 
 const createUser = async (data = {}) => {
     if (await UserReposity.findOneByEmail(data.email)) {
-        throw new BusinessError(ErrorCode.USER_400_001)
+        throw new BusinessError(ErrorCode.COMMON_400_001, [data.email])
     }
 
     const { salt, encrpytPassword } = SecurityHelper.generateEncryptPassword(data.password)
