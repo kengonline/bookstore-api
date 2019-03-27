@@ -21,7 +21,7 @@ const createUser = async (data = {}) => {
 
 const getProfileByToken = async (token) => {
     const { userId } = SecurityHelper.extractTokenKey(token)
-    const { salt, password, ...profile } = await UserReposity.findOneById(userId)
+    const { salt, password, ...profile } = await UserReposity.findOne(userId)
     return profile;
 }
 
