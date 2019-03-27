@@ -1,4 +1,8 @@
 {
+    "SYSTEM_500": {
+        "code": "SYSTEM_500",
+        "message": "Something went wrong. Please try again later or contact administrator."
+    },
     "USER_400_001": {
         "code": "USER_400_001",
         "message": "This email is taken"
