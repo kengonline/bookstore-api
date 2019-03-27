@@ -2,5 +2,9 @@
     "USER_400_001": {
         "code": "USER_400_001",
         "message": "This email is taken"
+    },
+    "USER_400_002": {
+        "code": "USER_400_002",
+        "message": "Email or Password is invalid."
     }
 }
