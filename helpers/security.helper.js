@@ -33,13 +33,13 @@ const generateToken = (userId) => {
         pool: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
     });
 
-    return `${userId}|${token}`
+    return `${userId}_${token}`
 }
 
 const getRedisTokenKey = (token) => `${TOKEN_PREFIX}${token}`;
 
 const extractTokenKey = (tokenKey) => {
-    const [userId, token] = tokenKey.replace(TOKEN_PREFIX, "").split("|");
+    const [userId, token] = tokenKey.replace(TOKEN_PREFIX, "").split("_");
     return { userId, token };
 }
 
