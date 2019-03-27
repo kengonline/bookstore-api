@@ -1,17 +1,13 @@
 const moment = require('moment');
 const { getConnection } = require('../helpers/database.helper')
+const RepositoryHelper = require('../helpers/repository.helper')
 
 const TABLE_NAME = "User"
 
-const findOneById = async (id) => {
-    const conn = await getConnection();
-    const [rows] = await conn.execute(`SELECT * FROM ${TABLE_NAME} WHERE id = ?`, [id])
-    return rows.length ? rows[0] : undefined;
-}
+const findOne = async (id) => RepositoryHelper.findOneById(TABLE_NAME, id)
 
 const findOneByEmail = async (email) => {
-    const conn = await getConnection();
-    const [rows] = await conn.execute(`SELECT * FROM ${TABLE_NAME} WHERE email = ?`, [email])
+    const rows = await RepositoryHelper.findByCriteria(TABLE_NAME, { email });
     return rows.length ? rows[0] : undefined;
 }
 
@@ -22,7 +18,7 @@ const insertUser = (conn, { email, password, firstName, lastName, status, salt }
 }
 
 module.exports = {
-    findOneById,
+    findOne,
     findOneByEmail,
     insertUser
 }
