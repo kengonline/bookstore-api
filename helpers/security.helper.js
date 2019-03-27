@@ -1,4 +1,7 @@
 const crypto = require('crypto');
+const Chance = require('chance');
+
+const chance = new Chance();
 
 const genRandomString = (length) => {
     return crypto.randomBytes(Math.ceil(length / 2)).toString('hex').slice(0, length);
@@ -22,7 +25,16 @@ const comparePassword = (encrpytPassword, password, salt) => {
     return encrpytPassword === encrpyt(password, salt)
 }
 
+const generateToken = () => chance.string({
+    length: 10,
+    pool: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+});
+
+const getRedisTokenKey = (token) => `tokens:${token}`;
+
 module.exports = {
     generateEncryptPassword,
-    comparePassword
+    comparePassword,
+    generateToken,
+    getRedisTokenKey
 }
