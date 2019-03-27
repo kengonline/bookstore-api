@@ -5,7 +5,7 @@ const { generateEncryptPassword } = require('../helpers/security.helper')
 const BusinessError = require('../errors/BusinessError')
 const ErrorCode = require('../assets/error_code.json')
 
-const register = async (data = {}) => {
+const createUser = async (data = {}) => {
     if (await findOneByEmail(data.email)) {
         throw new BusinessError(ErrorCode.USER_400_001)
     }
@@ -20,5 +20,5 @@ const register = async (data = {}) => {
 }
 
 module.exports = {
-    register
+    createUser
 }

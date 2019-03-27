@@ -1,15 +1,19 @@
 const router = require('express').Router();
 
-const { wrapper } = require('../helpers/route.helper');
+const { wrapper, secureWrapper } = require('../helpers/route.helper');
 
-const { register } = require('../services/user.service');
+const UserService = require('../services/user.service');
 
 router.post('/', (req, res, next) => wrapper(req, res, next, async () => {
     const { email, password, firstName, lastName } = req.body;
 
-    await register({ email, password, firstName, lastName });
+    await UserService.createUser({ email, password, firstName, lastName });
 
     res.send()
+}))
+
+router.get('/profile', (req, res, next) => secureWrapper(req, res, next, async () => {
+    res.send({ msg: "profile" })
 }))
 
 module.exports = router;
