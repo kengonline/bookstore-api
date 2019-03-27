@@ -7,9 +7,9 @@ const SecurityHelper = require('../helpers/security.helper')
 const BusinessError = require('../errors/BusinessError')
 const ErrorCode = require('../assets/error_code.json')
 
-const newToken = async () => {
+const newToken = async (userId) => {
     const { duration } = EnvConfig.session;
-    const token = SecurityHelper.generateToken();
+    const token = SecurityHelper.generateToken(userId);
     const tokenKey = SecurityHelper.getRedisTokenKey(token);
 
     await redisClient.set(tokenKey, `${moment().valueOf()}|`, 'PX', duration);
@@ -24,7 +24,7 @@ const login = async (email, inputPassword) => {
         throw new BusinessError(ErrorCode.USER_400_002)
     }
 
-    const token = await newToken();
+    const token = await newToken(user.id);
 
     const { password, salt, ...profile } = user;
 

@@ -25,16 +25,43 @@ const comparePassword = (encrpytPassword, password, salt) => {
     return encrpytPassword === encrpyt(password, salt)
 }
 
-const generateToken = () => chance.string({
-    length: 10,
-    pool: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-});
+const generateToken = (userId) => {
+    const token = chance.string({
+        length: 10,
+        pool: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    });
+
+    return `${userId}|${token}`
+}
 
 const getRedisTokenKey = (token) => `tokens:${token}`;
+
+const extractTokenKey = (tokenKey) => {
+    const [userId, token] = tokenKey.split("|");
+    return { userId, token };
+}
+
+const extractTokenValue = (tokenValue) => {
+    if (!tokenValue) {
+        return {};
+    }
+
+    const [createdDate, newTokenKey] = tokenValue.split("|");
+
+    return {
+        createdDate: parseInt(createdDate, 10),
+        newTokenKey: newTokenKey ? newTokenKey : undefined
+    };
+}
+
+const generateTokenValue = (createdDate, newTokenKey) => `${createdDate}|${newTokenKey}`
 
 module.exports = {
     generateEncryptPassword,
     comparePassword,
     generateToken,
-    getRedisTokenKey
+    getRedisTokenKey,
+    extractTokenKey,
+    extractTokenValue,
+    generateTokenValue
 }
