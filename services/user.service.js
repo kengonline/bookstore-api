@@ -1,4 +1,7 @@
+const moment = require('moment')
+
 const { STATUS } = require('../constants/user.constant');
+const { DATABASE_FORMAT } = require('../constants/datetime.constant');
 const UserReposity = require('../repositories/user.repository')
 const { queryTransaction } = require('../helpers/database.helper')
 const SecurityHelper = require('../helpers/security.helper')
@@ -13,7 +16,15 @@ const createUser = async (data = {}) => {
     const { salt, encrpytPassword } = SecurityHelper.generateEncryptPassword(data.password)
 
     const result = await queryTransaction(async conn => {
-        return await UserReposity.insertUser(conn, { ...data, password: encrpytPassword, status: STATUS.ACT_ACTIVE, salt });
+        const createdDate = moment().format(DATABASE_FORMAT);
+        return UserReposity.insert(conn, {
+            ...data,
+            password: encrpytPassword,
+            status: STATUS.ACT_ACTIVE,
+            createdBy: "SYSTEM",
+            salt,
+            createdDate
+        });
     })
 
     return result

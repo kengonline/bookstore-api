@@ -1,4 +1,3 @@
-const moment = require('moment');
 const { getConnection } = require('../helpers/database.helper')
 const RepositoryHelper = require('../helpers/repository.helper')
 
@@ -11,14 +10,14 @@ const findOneByEmail = async (email) => {
     return rows.length ? rows[0] : undefined;
 }
 
-const insertUser = (conn, { email, password, firstName, lastName, status, salt }) => {
+const insert = (conn, { email, password, firstName, lastName, status, salt, createdDate, createdBy }) => {
     const query = `INSERT INTO ${TABLE_NAME}(email, password, first_name, last_name, status, salt, created_date, created_by) VALUES ?`;
-    const values = [email, password, firstName, lastName, status, salt, moment().format('YYYY-MM-DD HH:mm:ss'), "SYSTEM"];
+    const values = [email, password, firstName, lastName, status, salt, createdDate, createdBy];
     return conn.query(query, [[values]])
 }
 
 module.exports = {
     findOne,
     findOneByEmail,
-    insertUser
+    insert
 }
