@@ -11,5 +11,9 @@ module.exports = {
     },
     redis: {
         host: process.env.REDIS_HOST
+    },
+    session: {
+        duration: process.env.SESSION_DURATION || 1800000,
+        renewTime: process.env.SESSION_RENEW_TIME || 600000
     }
 }
