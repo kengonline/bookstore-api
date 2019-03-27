@@ -7,7 +7,9 @@ const { register } = require('../services/user.service');
 router.post('/', (req, res, next) => wrapper(req, res, next, async () => {
     const { email, password, firstName, lastName } = req.body;
 
-    await register({ email, password, firstName, lastName })
+    await register({ email, password, firstName, lastName });
+
+    res.send()
 }))
 
 module.exports = router;
