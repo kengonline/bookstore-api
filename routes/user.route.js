@@ -13,7 +13,9 @@ router.post('/', (req, res, next) => wrapper(req, res, next, async () => {
 }))
 
 router.get('/profile', (req, res, next) => secureWrapper(req, res, next, async () => {
-    res.send({ msg: "profile" })
+    const { token } = req.cookies;
+    const profile = await UserService.getProfileByToken(token)
+    res.send(profile)
 }))
 
 module.exports = router;
