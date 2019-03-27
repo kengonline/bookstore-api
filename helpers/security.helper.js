@@ -3,6 +3,8 @@ const Chance = require('chance');
 
 const chance = new Chance();
 
+const TOKEN_PREFIX = "tokens:"
+
 const genRandomString = (length) => {
     return crypto.randomBytes(Math.ceil(length / 2)).toString('hex').slice(0, length);
 };
@@ -34,10 +36,10 @@ const generateToken = (userId) => {
     return `${userId}|${token}`
 }
 
-const getRedisTokenKey = (token) => `tokens:${token}`;
+const getRedisTokenKey = (token) => `${TOKEN_PREFIX}${token}`;
 
 const extractTokenKey = (tokenKey) => {
-    const [userId, token] = tokenKey.split("|");
+    const [userId, token] = tokenKey.replace(TOKEN_PREFIX, "").split("|");
     return { userId, token };
 }
 
