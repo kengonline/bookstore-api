@@ -12,7 +12,14 @@ const findByCriteria = async (criteria = {}) => {
     return rows;
 }
 
+const insert = (conn, { name, status, note, website, createdDate, createdBy }) => {
+    const query = `INSERT INTO ${TABLE_NAME}(name, status, note, website, created_date, created_by) VALUES ?`;
+    const values = [name, status, note, website, createdDate, createdBy];
+    return conn.query(query, [[values]])
+}
+
 module.exports = {
     findOne,
-    findByCriteria
+    findByCriteria,
+    insert
 }
