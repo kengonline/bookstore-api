@@ -1,6 +1,6 @@
 const Bluebird = require("bluebird");
 const Redis = require("redis");
-const EnvConfig = require('./env')
+const EnvConfig = require('./env.config')
 
 Bluebird.promisifyAll(Redis);
 client = Redis.createClient({
