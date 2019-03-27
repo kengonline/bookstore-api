@@ -17,16 +17,18 @@ const newToken = async () => {
     return { key: token, duration };
 }
 
-const login = async (email, password) => {
+const login = async (email, inputPassword) => {
     const user = await UserRepository.findOneByEmail(email);
 
-    if (user === undefined || !SecurityHelper.comparePassword(user.password, password, user.salt)) {
+    if (user === undefined || !SecurityHelper.comparePassword(user.password, inputPassword, user.salt)) {
         throw new BusinessError(ErrorCode.USER_400_002)
     }
 
     const token = await newToken();
 
-    return { user, token };
+    const { password, salt, ...profile } = user;
+
+    return { profile, token };
 }
 
 const logout = async (token) => {
