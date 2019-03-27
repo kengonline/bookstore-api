@@ -1,11 +1,11 @@
 {
+    "COMMON_400_001": {
+        "code": "COMMON_400_001",
+        "message": "{0} is already used."
+    },
     "SYSTEM_500": {
         "code": "SYSTEM_500",
         "message": "Something went wrong. Please try again later or contact administrator."
-    },
-    "USER_400_001": {
-        "code": "USER_400_001",
-        "message": "This email is taken"
     },
     "USER_400_002": {
         "code": "USER_400_002",
