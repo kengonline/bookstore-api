@@ -12,8 +12,12 @@ const generateConditionQuery = (criteria = {}) => {
         return "";
     }
 
-    return Object.keys(criteria).reduce((query, key) => {
-        return `${query} ${key}=?`
+    return Object.keys(criteria).reduce((query, key, index) => {
+        if (index === 0) {
+            return `${query} ${key}=?`
+        } else {
+            return `${query} AND ${key}=?`
+        }
     }, " WHERE ");
 }
 
