@@ -5,8 +5,7 @@ const UserService = require('../services/user.service');
 const PublisherService = require('../services/publisher.service');
 
 router.get('/', (req, res, next) => wrapper(req, res, next, async () => {
-    const { criteria } = req.body
-    const result = await PublisherService.getList(criteria)
+    const result = await PublisherService.getList(req.query)
 
     res.send(result)
 }))
