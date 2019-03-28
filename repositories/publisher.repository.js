@@ -5,12 +5,7 @@ const TABLE_NAME = "Publisher"
 
 const findOne = async (id) => RepositoryHelper.findOneById(TABLE_NAME, id)
 
-const findByCriteria = async (criteria = {}) => {
-    const conn = await getConnection();
-    const query = `SELECT * FROM ${TABLE_NAME} `
-    const [rows] = await conn.execute(query)
-    return rows;
-}
+const findByCriteria = async (criteria = {}) => RepositoryHelper.findByCriteria(TABLE_NAME, criteria)
 
 const insert = (conn, { name, status, note, website, createdDate, createdBy }) => {
     const query = `INSERT INTO ${TABLE_NAME}(name, status, note, website, created_date, created_by) VALUES ?`;
