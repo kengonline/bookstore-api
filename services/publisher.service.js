@@ -1,6 +1,6 @@
 const moment = require('moment')
 const { DATABASE_FORMAT } = require('../constants/datetime.constant');
-const { STATUS } = require('../constants/publisher.constant');
+const { STATUS } = require('../constants/common.constant');
 const PublisherRepository = require("../repositories/publisher.repository")
 const { queryTransaction } = require('../helpers/database.helper')
 const BusinessError = require('../errors/BusinessError')
