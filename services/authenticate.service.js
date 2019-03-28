@@ -28,7 +28,14 @@ const login = async (email, inputPassword) => {
 
     const { password, salt, ...profile } = user;
 
-    return { profile, token };
+    return {
+        profile: {
+            ...profile,
+            createdDate: moment(profile.createdDate).valueOf(),
+            updatedDate: moment(profile.updatedDate).valueOf()
+        },
+        token
+    };
 }
 
 const logout = async (token) => {

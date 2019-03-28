@@ -7,7 +7,13 @@ const BusinessError = require('../errors/BusinessError')
 const ErrorCode = require('../assets/error_code.json')
 
 const getList = async (criteria) => {
-    return await PublisherRepository.findByCriteria(criteria);
+    const result = await PublisherRepository.findByCriteria(criteria);
+
+    return result.map(item => ({
+        ...item,
+        createdDate: moment(item.createdDate).valueOf(),
+        updatedDate: moment(item.updatedDate).valueOf()
+    }))
 }
 
 const create = async (data, userContext) => {
