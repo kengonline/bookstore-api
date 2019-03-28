@@ -4,7 +4,7 @@ const { getConnection } = require('../helpers/database.helper')
 const findOneById = async (tableName, id) => {
     const conn = await getConnection();
     const [rows] = await conn.execute(`SELECT * FROM ${tableName} WHERE id = ?`, [id])
-    return rows.length ? rows[0] : undefined;
+    return rows.length ? columnsFormatter(rows)[0] : undefined;
 }
 
 const generateConditionQuery = (criteria = {}) => {
@@ -26,10 +26,17 @@ const findByCriteria = async (tableName, criteria = {}) => {
     const query = `SELECT * FROM ${tableName} ${generateConditionQuery(criteria)}`
     const [rows] = await conn.execute(query, Object.values(criteria))
 
-    return rows;
+    return columnsFormatter(rows);
+}
+
+const columnsFormatter = (rows = []) => {
+    return rows.map(row => Object.keys(row)
+        .reduce((result, key) => ({ ...result, [_.camelCase(key)]: row[key] }), {})
+    )
 }
 
 module.exports = {
+    columnsFormatter,
     findOneById,
     findByCriteria
 }
