@@ -16,6 +16,20 @@ const getList = async (criteria) => {
     }))
 }
 
+const getDetail = async (id) => {
+    const result = await PublisherRepository.findOne(id);
+
+    if (result === undefined) {
+        throw new BusinessError(ErrorCode.COMMON_400_002, ["Publisher"])
+    }
+
+    return {
+        ...result,
+        createdDate: moment(result.createdDate).valueOf(),
+        updatedDate: moment(result.updatedDate).valueOf()
+    }
+}
+
 const create = async (data, userContext) => {
     if ((await PublisherRepository.findByCriteria({ name: data.name })).length) {
         throw new BusinessError(ErrorCode.COMMON_400_001, [data.name])
@@ -36,5 +50,6 @@ const create = async (data, userContext) => {
 
 module.exports = {
     getList,
+    getDetail,
     create
 }

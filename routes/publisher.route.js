@@ -11,6 +11,12 @@ router.get('/', (req, res, next) => wrapper(req, res, next, async () => {
     res.send(result)
 }))
 
+router.get('/:id', (req, res, next) => wrapper(req, res, next, async () => {
+    const result = await PublisherService.getDetail(req.params.id)
+
+    res.send(result)
+}))
+
 router.post('/', (req, res, next) => secureWrapper(req, res, next, async () => {
     const { name, status, note, website } = req.body
 
