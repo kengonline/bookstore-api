@@ -3,6 +3,10 @@
         "code": "COMMON_400_001",
         "message": "{0} is already used."
     },
+    "COMMON_400_002": {
+        "code": "COMMON_400_002",
+        "message": "{0} entity is not found."
+    },
     "SYSTEM_500": {
         "code": "SYSTEM_500",
         "message": "Something went wrong. Please try again later or contact administrator."
