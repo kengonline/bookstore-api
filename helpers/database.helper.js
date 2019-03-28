@@ -1,4 +1,5 @@
 const pool = require('../configs/database.config');
+const TechnicalError = require('../errors/TechnicalError');
 
 const queryTransaction = async (callback) => {
     const conn = await pool.getConnection();
@@ -10,9 +11,11 @@ const queryTransaction = async (callback) => {
         await conn.commit();
     } catch (e) {
         await conn.rollback();
-        console.log(e.message, e.stack)
+        console.error(e)
+        throw new TechnicalError(e)
+    } finally {
+        conn.release();
     }
-    conn.release();
 
     return result;
 }
