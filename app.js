@@ -10,7 +10,7 @@ const ErrorCode = require('./assets/error_code.json')
 
 app.use(bodyParser.json())
 app.use(cookieParser())
-app.use('/api', require('./routes/index.route'))
+app.use(require('./routes/index.route'))
 
 app.use((err, req, res, next) => {
     console.error(err);
